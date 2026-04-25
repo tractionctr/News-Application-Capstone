@@ -43,29 +43,6 @@ A role-based Django web application where users can read, create, and manage art
 
 ---
 
-## Project Structure
-News Application/
-|
-|-- articles/
-| |-- models.py
-| |-- views.py
-| |-- urls.py
-| |-- api/
-| | |-- views.py
-| | |-- urls.py
-| |
-| |-- forms.py
-|
-|-- news_project/
-| |-- settings.py
-| |-- urls.py
-|
-|-- templates/
-|-- base.html
-
-
----
-
 ## Setup Instructions
 
 1. Clone the repo
