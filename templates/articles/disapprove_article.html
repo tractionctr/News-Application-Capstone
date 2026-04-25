@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Disapprove Article - News Application{% endblock %}
+
+{% block content %}
+<h1>Disapprove Article</h1>
+
+<p>Are you sure you want to disapprove this article?</p>
+
+<div style="background: #f5f5f5; padding: 15px; margin: 15px 0;">
+    <h3>{{ article.title }}</h3>
+    <p><strong>Author:</strong> {{ article.author.username }}</p>
+    {% if article.publisher %}
+    <p><strong>Publisher:</strong> {{ article.publisher.name }}</p>
+    {% endif %}
+    <p><strong>Created:</strong> {{ article.created_at|date:"M d, Y" }}</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <button type="submit" style="background: orange;">Yes, Disapprove</button>
+        <a href="{% url 'editor_dashboard' %}">Cancel</a>
+    </p>
+</form>
+{% endblock %}

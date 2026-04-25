@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit Newsletter</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        Title:<br>
+        <input type="text" name="title" value="{{ newsletter.title }}">
+    </p>
+
+    <p>
+        Description:<br>
+        <textarea name="description">{{ newsletter.description }}</textarea>
+    </p>
+
+    <p>
+        Add Articles:
+        <br>
+        {% for article in articles %}
+            <label>
+                <input type="checkbox" name="articles" value="{{ article.id }}"
+                    {% if article in newsletter.articles.all %}checked{% endif %}>
+                {{ article.title }}
+            </label><br>
+        {% endfor %}
+    </p>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

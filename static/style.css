@@ -1,0 +1,103 @@
+/* =========================
+   GLOBAL DARK MODE (DEFAULT)
+========================= */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #eaeaea;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    background-color: #1a1a1a !important;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar-text {
+    color: #eaeaea !important;
+}
+
+/* hover effect */
+.nav-hover {
+    transition: 0.2s ease;
+}
+
+.nav-hover:hover {
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+    color: #8ab4f8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    background-color: #1e1e1e;
+    color: #eaeaea;
+    border: 1px solid #333;
+    border-radius: 12px;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+    border-color: #555;
+    color: #eaeaea;
+}
+
+/* DARK THEME BUTTON (CONSISTENT CONTRAST) */
+
+.btn-outline-secondary {
+    color: #eaeaea;
+    border-color: #555;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #eaeaea;
+    color: #121212; /* opposite = readable */
+    border-color: #eaeaea;
+}
+
+/* =========================
+   HR + MISC
+========================= */
+
+hr {
+    border-color: #333;
+}
+
+/* MAIN TEXT FIX */
+p, span, li {
+    color: #eaeaea;
+}
+
+/* SECONDARY TEXT (subtle but visible, not ghost mode) */
+.text-muted {
+    color: #b0b0b0 !important;
+}

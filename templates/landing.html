@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - News Application{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1>News Application</h1>
+        <p class="text-muted">Your daily chaos of information.</p>
+    </div>
+
+    <!-- FEATURED ARTICLES -->
+    <h3 class="mb-3">🔥 Featured Articles</h3>
+
+    <div class="row g-3">
+
+        {% if featured_articles %}
+            {% for article in featured_articles %}
+                <div class="col-md-4">
+                    <div class="card p-3 h-100">
+
+                        <h5>{{ article.title }}</h5>
+
+                        <p class="text-muted mb-2">
+                            by {{ article.author.username }}
+                        </p>
+
+                        <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary btn-sm">
+                            Read
+                        </a>
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No articles yet. The silence is terrifying.</p>
+        {% endif %}
+
+    </div>
+
+    <hr class="my-4">
+
+    <!-- QUICK ACTIONS -->
+    <h3 class="mb-3">⚡ Quick Actions</h3>
+
+    <div class="row g-3">
+
+        {% if user.is_authenticated %}
+
+            {% if user.role == 'Reader' %}
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Browse</h5>
+                        <p>Read stuff. Judge silently.</p>
+                        <a href="{% url 'article_list' %}" class="btn btn-dark btn-sm">Go</a>
+                    </div>
+                </div>
+
+            {% elif user.role == 'Journalist' %}
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Create Article</h5>
+                        <p>Go publish something controversial.</p>
+                        <a href="{% url 'create_article' %}" class="btn btn-success btn-sm">Start</a>
+                    </div>
+                </div>
+
+            {% elif user.role == 'Editor' %}
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Editor Panel</h5>
+                        <p>You are the final boss.</p>
+                        <a href="{% url 'editor_dashboard' %}" class="btn btn-warning btn-sm">Enter</a>
+                    </div>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5>Join</h5>
+                    <p>Join the chaos or just watch it unfold.</p>
+                        <div class="d-flex gap-2">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+                        <a href="{% url 'signup' %}" class="btn btn-outline-primary btn-sm">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

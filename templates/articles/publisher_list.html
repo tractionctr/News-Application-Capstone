@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Publishers</h1>
+
+<ul>
+{% for publisher in publishers %}
+    <li>
+        <a href="{% url 'publisher_detail' publisher.pk %}">
+            {{ publisher.name }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

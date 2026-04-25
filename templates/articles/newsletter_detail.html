@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ newsletter.title }} - News Application{% endblock %}
+
+{% block content %}
+
+<h1>{{ newsletter.title }}</h1>
+
+<p><strong>Author:</strong> {{ newsletter.author.username }}</p>
+<p><strong>Created:</strong> {{ newsletter.created_at|date:"M d, Y" }}</p>
+
+<p>{{ newsletter.description }}</p>
+
+<hr>
+
+<h2>Articles in this Newsletter</h2>
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{% url 'article_detail' article.pk %}">
+                    {{ article.title }}
+                </a>
+                by {{ article.author.username }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No articles in this newsletter yet.</p>
+{% endif %}
+{% if user.role == 'Journalist' or user.role == 'Editor' %}
+<p>
+    <a href="{% url 'edit_newsletter' newsletter.pk %}">✏️ Edit Newsletter</a>
+</p>
+{% endif %}
+
+<br>
+
+<a href="{% url 'newsletter_list' %}">← Back to Newsletters</a>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Journalist Dashboard - News Application{% endblock %}
+
+{% block content %}
+<h1>Journalist Dashboard</h1>
+
+<h2>My Articles</h2>
+{% if articles %}
+<table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Publisher</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td><strong>{{ article.title }}</strong></td>
+            <td>{% if article.approved %}Approved{% else %}Pending{% endif %}</td>
+            <td>{{ article.publisher.name|default:"Independent" }}</td>
+            <td>{{ article.created_at|date:"M d, Y" }}</td>
+            <td>
+                <a href="{% url 'article_detail' article.pk %}">View</a> |
+                <a href="{% url 'edit_article' article.pk %}">Edit</a> |
+                <a href="{% url 'delete_article' article.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You haven't created any articles yet.</p>
+{% endif %}
+
+<h2>My Newsletters</h2>
+{% if newsletters %}
+<ul>
+    {% for newsletter in newsletters %}
+    <li>
+        {{ newsletter.title }} ({{ newsletter.articles.count }} articles)
+        <a href="{% url 'newsletter_detail' newsletter.pk %}">View</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You haven't created any newsletters yet.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'create_article' %}">Create New Article</a> |
+    <a href="{% url 'create_newsletter' %}">Create New Newsletter</a>
+</p>
+{% endblock %}

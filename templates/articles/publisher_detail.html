@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ publisher.name }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ publisher.name }}</h1>
+
+<h2>Articles</h2>
+
+{% if articles %}
+<ul>
+    {% for article in articles %}
+    <li>
+        <a href="{% url 'article_detail' article.pk %}">
+            {{ article.title }}
+        </a>
+        by {{ article.author.username }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No articles for this publisher.</p>
+{% endif %}
+
+<a href="{% url 'article_list' %}">← Back</a>
+
+{% endblock %}

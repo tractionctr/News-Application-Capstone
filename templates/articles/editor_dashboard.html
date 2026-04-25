@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Editor Dashboard - News Application{% endblock %}
+
+{% block content %}
+<h1>Editor Dashboard</h1>
+
+<h2>All Articles</h2>
+
+{% if articles %}
+<table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publisher</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for article in articles %}
+    <tr>
+        <td>{{ article.title }}</td>
+        <td>{{ article.author.username }}</td>
+        <td>{{ article.publisher.name|default:"Independent" }}</td>
+        <td>
+            {% if article.approved %}
+                Approved
+            {% else %}
+                Pending
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'article_detail' article.pk %}">View</a> |
+            <a href="{% url 'edit_article' article.pk %}">Edit</a> |
+            <a href="{% url 'delete_article' article.pk %}">Delete</a> |
+
+            {% if not article.approved %}
+                <a href="{% url 'approve_article' article.pk %}">Approve</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No articles found.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,53 @@
+from django.urls import path, include
+from django.contrib import admin
+from django.contrib.auth.views import LogoutView
+from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
+
+from . import views
+
+urlpatterns = [
+
+    # =====================
+    # WEB PAGES
+    # =====================
+    path('', views.landing_page, name='landing'),
+    path('articles/', views.article_list_view, name='article_list'),
+    path('signup/', views.signup, name='signup'),
+
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+
+    path('articles/<int:pk>/', views.article_detail_view, name='article_detail'),
+    path('articles/<int:pk>/edit/', views.edit_article_view, name='edit_article'),
+    path('articles/<int:pk>/delete/', views.delete_article_view, name='delete_article'),
+    path('articles/<int:pk>/approve/', views.approve_article_view, name='approve_article'),
+
+    path('articles/create/', views.create_article_view, name='create_article'),
+
+    path('publishers/<int:pk>/', views.publisher_detail_view, name='publisher_detail'),
+    path('publishers/', views.publisher_list_view, name='publisher_list'),
+
+    path('editor/dashboard/', views.editor_dashboard_view, name='editor_dashboard'),
+    path('journalist/dashboard/', views.journalist_dashboard_view, name='journalist_dashboard'),
+
+    # newsletters
+    path('newsletters/', views.newsletter_list_view, name='newsletter_list'),
+    path('newsletters/create/', views.create_newsletter_view, name='create_newsletter'),
+    path('newsletters/<int:pk>/', views.newsletter_detail_view, name='newsletter_detail'),
+    path('newsletters/<int:pk>/edit/', views.edit_newsletter_view, name='edit_newsletter'),
+
+    # =====================
+    # ADMIN
+    # =====================
+    path('admin/', admin.site.urls),
+
+    # =====================
+    # AUTH SYSTEM
+    # =====================
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    # =====================
+    # API
+    # =====================
+    path('api/docs/', views.api_docs_view, name='api-docs'),
+]

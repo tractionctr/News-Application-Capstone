@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Newsletter - News Application{% endblock %}
+
+{% block content %}
+<h1>Create New Newsletter</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required style="width: 100%;">
+    </p>
+    <p>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" required style="width: 100%;"></textarea>
+    </p>
+    <p>
+        <label for="articles">Select Articles:</label><br>
+        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+            {% for article in articles %}
+            <label style="display: block; margin: 5px 0;">
+                <input type="checkbox" name="articles" value="{{ article.id }}">
+                {{ article.title }} - {{ article.author.username }}
+            </label>
+            {% empty %}
+            <p>No approved articles available.</p>
+            {% endfor %}
+        </div>
+    </p>
+    <p>
+        <button type="submit">Create Newsletter</button>
+        <a href="{% url 'newsletter_list' %}">Cancel</a>
+    </p>
+</form>
+{% endblock %}

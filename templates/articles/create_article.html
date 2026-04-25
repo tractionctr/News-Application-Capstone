@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Article - News Application{% endblock %}
+
+{% block content %}
+
+<h1>Create New Article</h1>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <input type="text" name="title" placeholder="Title" required style="width:100%;">
+
+    <br><br>
+
+    <textarea name="content" placeholder="Content" required style="width:100%; height:200px;"></textarea>
+
+    <br><br>
+
+    {% if publishers %}
+    <select name="publisher">
+        <option value="">Independent Article</option>
+        {% for publisher in publishers %}
+            <option value="{{ publisher.id }}">{{ publisher.name }}</option>
+        {% endfor %}
+    </select>
+    {% else %}
+        <p>No publishers available</p>
+    {% endif %}
+    <p>
+    <label>Assign to Newsletters:</label><br>
+    {% for newsletter in newsletters %}
+        <label>
+            <input type="checkbox" name="newsletters" value="{{ newsletter.id }}">
+            {{ newsletter.title }}
+        </label><br>
+    {% endfor %}
+</p>
+
+    <br><br>
+
+    <button type="submit">Create Article</button>
+</form>
+
+{% endblock %}

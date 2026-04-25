@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}API Documentation{% endblock %}
+
+{% block content %}
+
+<h1>API Documentation</h1>
+
+<hr>
+
+<h2>Authentication</h2>
+<ul>
+    <li>POST /api/token/</li>
+    <li>Token-based authentication required for all endpoints</li>
+</ul>
+
+<hr>
+
+<h2>Articles</h2>
+
+<ul>
+    <li><b>GET /api/articles/</b> → All approved articles</li>
+    <li><b>GET /api/articles/&lt;id&gt;/</b> → Single article</li>
+    <li><b>GET /api/articles/subscribed/</b> → Subscribed content</li>
+    <li><b>POST /api/articles/</b> → Create article (Journalist only)</li>
+    <li><b>PUT /api/articles/&lt;id&gt;/</b> → Update (Journalist/Editor)</li>
+    <li><b>DELETE /api/articles/&lt;id&gt;/</b> → Delete (Journalist/Editor)</li>
+</ul>
+
+<hr>
+
+<h2>Newsletters</h2>
+
+<ul>
+    <li><b>GET /api/newsletters/</b></li>
+    <li><b>GET /api/newsletters/&lt;id&gt;/</b></li>
+    <li><b>POST /api/newsletters/</b> → Journalist/Editor</li>
+    <li><b>PUT /api/newsletters/&lt;id&gt;/</b></li>
+    <li><b>DELETE /api/newsletters/&lt;id&gt;/</b></li>
+</ul>
+
+<hr>
+
+<h2>Roles & Permissions</h2>
+
+<ul>
+    <li><b>Reader</b> → View only</li>
+    <li><b>Journalist</b> → Create + manage own content</li>
+    <li><b>Editor</b> → Full control + approvals</li>
+</ul>
+
+<hr>
+
+<h2>Example</h2>
+
+<pre>
+GET /api/articles/
+
+Response:
+[
+  {
+    "id": 1,
+    "title": "Breaking News",
+    "content": "Hello world"
+  }
+]
+</pre>
+
+{% endblock %}

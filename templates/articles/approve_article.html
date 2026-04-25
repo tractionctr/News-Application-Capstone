@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Approve Article - News Application{% endblock %}
+
+{% block content %}
+<h1>Approve Article</h1>
+<p>Are you sure you want to approve this article?</p>
+
+<article>
+    <h2>{{ article.title }}</h2>
+    <p><strong>Author:</strong> {{ article.author.username }}</p>
+    {% if article.publisher %}
+    <p><strong>Publisher:</strong> {{ article.publisher.name }}</p>
+    {% endif %}
+    <p><strong>Created:</strong> {{ article.created_at|date:"M d, Y" }}</p>
+</article>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Approve Article</button>
+    <a href="{% url 'editor_dashboard' %}">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Newsletters - News Application{% endblock %}
+
+{% block content %}
+
+<h1>Newsletters</h1>
+
+{% if user.role in "Journalist Editor" %}
+    <a href="{% url 'create_newsletter' %}">
+        <button>Create Newsletter</button>
+    </a>
+{% endif %}
+
+<hr>
+
+{% if newsletters %}
+<ul>
+    {% for newsletter in newsletters %}
+    <li>
+        <a href="{% url 'newsletter_detail' newsletter.pk %}">
+            {{ newsletter.title }}
+        </a>
+        by {{ newsletter.author.username }}
+        ({{ newsletter.articles.count }} articles)
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No newsletters available.</p>
+{% endif %}
+
+{% endblock %}
