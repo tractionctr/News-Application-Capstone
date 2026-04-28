@@ -23,6 +23,20 @@
 <p>No articles for this publisher.</p>
 {% endif %}
 
-<a href="{% url 'article_list' %}">← Back</a>
+{% if user.role == 'Reader' %}
+    <a href="{% url 'subscribe_publisher' publisher.pk %}">
+        {% if publisher in user.subscriptions_publishers.all %}
+            Unsubscribe
+        {% else %}
+            Subscribe
+        {% endif %}
+    </a>
+{% endif %}
+
+{% if user.role == 'Editor' %}
+    <a href="{% url 'edit_publisher' publisher.pk %}">Edit</a>
+{% endif %}
+
+<a href="{% url 'article_list' %}">|  Back</a>
 
 {% endblock %}

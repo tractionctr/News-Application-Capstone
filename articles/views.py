@@ -5,6 +5,7 @@ Includes API views and traditional Django views for web interface.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.db.models import Q
 
 from .models import User, Publisher, Article, Newsletter
 from .forms import CustomUserCreationForm
@@ -42,6 +43,20 @@ def landing_page(request):
 @login_required
 def api_docs_view(request):
     return render(request, "api/docs.html")
+
+
+@login_required
+def article_detail_view(request, pk):
+    user = request.user
+
+    if user.role == 'Reader':
+        article = get_object_or_404(Article, pk=pk, approved=True)
+    elif user.role == 'Journalist':
+        article = get_object_or_404(Article, pk=pk, author=user)
+    else:
+        article = get_object_or_404(Article, pk=pk)
+
+    return render(request, 'articles/article_detail.html', {'article': article})
 
 
 @login_required
@@ -146,24 +161,31 @@ def edit_newsletter_view(request, pk):
 
 @login_required
 def article_list_view(request):
-    """Homepage view showing list of approved articles."""
-    articles = Article.objects.filter(approved=True).select_related('author', 'publisher')
-    return render(request, 'articles/article_list.html', {'articles': articles})
-
-
-@login_required
-def article_detail_view(request, pk):
-    """Article detail view."""
     user = request.user
 
-    if user.role == 'Reader':
-        article = get_object_or_404(Article, pk=pk, approved=True)
-    elif user.role == 'Journalist':
-        article = get_object_or_404(Article, pk=pk, author=user)
-    else:  # Editor
-        article = get_object_or_404(Article, pk=pk)
+    all_articles = Article.objects.filter(approved=True).select_related('author', 'publisher')
 
-    return render(request, 'articles/article_detail.html', {'article': article})
+    if user.role == 'Reader':
+        subs_pub = user.subscriptions_publishers.all()
+        subs_jour = user.subscriptions_journalists.all()
+
+        subscribed = all_articles.filter(
+            Q(publisher__in=subs_pub) |
+            Q(author__in=subs_jour)
+        )
+
+        others = all_articles.exclude(
+            id__in=subscribed.values_list('id', flat=True)
+        )
+
+        articles = list(subscribed) + list(others)
+
+    else:
+        articles = all_articles
+
+    return render(request, 'articles/article_list.html', {
+        'articles': articles
+    })
 
 
 @login_required
@@ -316,5 +338,72 @@ def newsletter_detail_view(request, pk):
 
     return render(request, 'articles/newsletter_detail.html', {
         'newsletter': newsletter,
+        'articles': articles
+    })
+
+
+@login_required
+def subscribe_publisher_view(request, pk):
+    if request.user.role != 'Reader':
+        return redirect('article_list')
+
+    publisher = get_object_or_404(Publisher, pk=pk)
+
+    if publisher in request.user.subscriptions_publishers.all():
+        request.user.subscriptions_publishers.remove(publisher)
+    else:
+        request.user.subscriptions_publishers.add(publisher)
+
+    return redirect('publisher_detail', pk=pk)
+
+
+@login_required
+def subscribe_journalist_view(request, pk):
+    if request.user.role != 'Reader':
+        return redirect('article_list')
+
+    journalist = get_object_or_404(User, pk=pk, role='Journalist')
+
+    if journalist in request.user.subscriptions_journalists.all():
+        request.user.subscriptions_journalists.remove(journalist)
+    else:
+        request.user.subscriptions_journalists.add(journalist)
+
+    return redirect('article_list')
+
+
+@login_required
+def create_publisher_view(request):
+    if request.user.role != 'Editor':
+        return redirect('article_list')
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+
+        if name:
+            Publisher.objects.create(name=name)
+            return redirect('publisher_list')
+
+    return render(request, 'articles/create_publisher.html')
+
+
+@login_required
+def edit_publisher_view(request, pk):
+    if request.user.role != 'Editor':
+        return redirect('publisher_list')
+
+    publisher = get_object_or_404(Publisher, pk=pk)
+    articles = Article.objects.filter(publisher=publisher)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+
+        if name:
+            publisher.name = name
+            publisher.save()
+            return redirect('publisher_detail', pk=pk)
+
+    return render(request, 'articles/edit_publisher.html', {
+        'publisher': publisher,
         'articles': articles
     })

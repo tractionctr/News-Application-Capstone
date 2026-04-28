@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Edit Publisher</h1>
+
+<!-- EDIT PUBLISHER FORM -->
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ publisher.name }}" required>
+    <button type="submit">Save</button>
+</form>
+
+<hr>
+
+<h2>Articles in this Publisher</h2>
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{% url 'edit_article' article.pk %}">
+                    {{ article.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No articles in this publisher.</p>
+{% endif %}
+
+{% endblock %}

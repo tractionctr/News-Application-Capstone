@@ -5,13 +5,23 @@
 <h1>Publishers</h1>
 
 <ul>
-{% for publisher in publishers %}
-    <li>
-        <a href="{% url 'publisher_detail' publisher.pk %}">
-            {{ publisher.name }}
-        </a>
-    </li>
-{% endfor %}
+{% if publishers %}
+    <ul>
+    {% for publisher in publishers %}
+        <li>
+            <a href="{% url 'publisher_detail' publisher.pk %}">
+                {{ publisher.name }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No publishers yet.</p>
+{% endif %}
 </ul>
+
+{% if user.role == 'Editor' %}
+    <a href="{% url 'create_publisher' %}">+ Create Publisher</a>
+{% endif %}
 
 {% endblock %}

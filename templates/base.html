@@ -32,6 +32,10 @@
                 <a class="nav-link nav-hover" href="{% url 'newsletter_list' %}">Newsletters</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link nav-hover" href="{% url 'publisher_list' %}">Publishers</a>
+            </li>
+
             {% if user.role == 'Editor' %}
             <li class="nav-item">
                 <a class="nav-link nav-hover" href="{% url 'editor_dashboard' %}">Editor</a>

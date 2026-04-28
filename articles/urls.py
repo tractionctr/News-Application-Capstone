@@ -26,6 +26,11 @@ urlpatterns = [
 
     path('publishers/<int:pk>/', views.publisher_detail_view, name='publisher_detail'),
     path('publishers/', views.publisher_list_view, name='publisher_list'),
+    path('publishers/create/', views.create_publisher_view, name='create_publisher'),
+    path('publishers/<int:pk>/edit/', views.edit_publisher_view, name='edit_publisher'),
+
+    path('publishers/<int:pk>/subscribe/', views.subscribe_publisher_view, name='subscribe_publisher'),
+    path('journalists/<int:pk>/subscribe/', views.subscribe_journalist_view, name='subscribe_journalist'),
 
     path('editor/dashboard/', views.editor_dashboard_view, name='editor_dashboard'),
     path('journalist/dashboard/', views.journalist_dashboard_view, name='journalist_dashboard'),
