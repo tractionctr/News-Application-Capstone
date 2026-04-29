@@ -15,7 +15,6 @@ imagesize==2.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
-mysqlclient==2.2.8
 packaging==26.2
 Pygments==2.20.0
 PyMySQL==1.1.2
@@ -23,7 +22,7 @@ python-dotenv==1.2.2
 requests==2.33.1
 roman-numerals==4.1.0
 snowballstemmer==3.0.1
-Sphinx==9.1.0
+Sphinx==7.3.7
 sphinx_rtd_theme==3.1.0
 sphinxcontrib-applehelp==2.0.0
 sphinxcontrib-devhelp==2.0.0
