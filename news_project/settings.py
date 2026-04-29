@@ -16,6 +16,9 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-key-for-dev')
 
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
