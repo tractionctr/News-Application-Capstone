@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 import pymysql
 pymysql.install_as_MySQLdb()
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Load .env
 load_dotenv(BASE_DIR / ".env")
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-key-for-dev')
