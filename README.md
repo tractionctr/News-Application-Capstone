@@ -121,7 +121,7 @@ docker run -p 8000:8000 \
   news-app
 ```
 
-Visit: http://localhost:8000/
+Open via GitHub Codespaces "Open in Browser" button or forwarded port URL
 
 ---
 
