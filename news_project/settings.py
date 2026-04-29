@@ -9,7 +9,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # Load .env
-load_dotenv()
+load_dotenv(BASE_DIR / ".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-key-for-dev')
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['*']
 
 # AUTH REDIRECTS
 LOGIN_REDIRECT_URL = 'landing'
@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'news_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'NAME': os.getenv('DB_NAME', 'news_db'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'root'),
+        'HOST': os.getenv('DB_HOST', 'mysql-db'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
 
