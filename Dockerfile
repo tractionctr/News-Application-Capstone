@@ -23,9 +23,6 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy project
 COPY . /app/
 
-# Collect static files (safe even if empty)
-RUN python manage.py collectstatic --noinput || true
-
 # Expose Django port
 EXPOSE 8000
 
