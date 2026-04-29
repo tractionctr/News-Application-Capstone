@@ -95,6 +95,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.app.github.dev",
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -138,6 +140,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # INTERNAL API
-INTERNAL_API_ENDPOINT = 'http://localhost:8000/api/approved/'
+INTERNAL_API_ENDPOINT = '/api/approved/'
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
