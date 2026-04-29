@@ -1,107 +1,101 @@
-# 📰 News Application
+# News Application Capstone
 
-A role-based Django web application where users can read, create, and manage articles and newsletters.
+## Overview
 
----
+A Django-based news platform with role-based authentication and article management.
 
-## Features
+### Features
 
-### Authentication
-- User registration (sign up)
-- Login / logout system
-- Role-based access control
+* Reader, Journalist, and Editor roles
+* Article creation, editing, and approval workflow
+* Publisher and journalist subscriptions
+* Newsletter system
+* REST API support
+* Docker support
+* Sphinx documentation
 
-### Roles
-- **Reader** → View articles and newsletters  
-- **Journalist** → Create and manage own content  
-- **Editor** → Approve, edit, and manage all content  
+## Running with Virtual Environment (venv)
 
-### Articles
-- Create, edit, and delete articles  
-- Approval system (Editor only)  
-- View approved articles  
+### 1. Clone the repository
 
-### Newsletters
-- Create newsletters  
-- Add multiple articles  
-- Edit and view newsletters  
+```bash
+git clone https://github.com/tractionctr/News-Application-Capstone
+cd News-Application-Capstone
+```
 
-### API
-- REST API built with Django REST Framework  
-- Endpoints for articles and newsletters  
-- Custom API docs page at `/api/docs/`  
+### 2. Create and activate virtual environment
 
----
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
 
-## Tech Stack
+### 3. Install dependencies
 
-- Django  
-- Django REST Framework  
-- Bootstrap 5  
-- SQLite  
-- HTML / CSS  
-
----
-
-## Setup Instructions
-
-1. Clone the repo
-
-git clone https://github.com/tractionctr/News-Application.git
-
-cd news-application
-
-
-2. Install dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
+### 4. Create `.env` file
 
-3. Run migrations
+Create a `.env` file in the project root and add your own values:
 
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+DB_NAME=your-db-name
+DB_USER=your-db-user
+DB_PASSWORD=your-db-password
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+### 5. Run migrations
+
+```bash
 python manage.py migrate
+```
 
+### 6. Run server
 
-4. Create superuser (optional but recommended)
-
-python manage.py createsuperuser
-
-
-5. Run server
-
+```bash
 python manage.py runserver
+```
 
+## Running with Docker
 
-6. Open in browser
+### Build image
 
-http://127.0.0.1:8000/
+```bash
+docker build -t news-app .
+```
 
+### Run container
 
----
+```bash
+docker run -p 8000:8000 news-app
+```
 
-## API Endpoints
+Visit: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-### Articles
-- `GET /api/articles/`
-- `POST /api/articles/`
-- `GET /api/articles/<id>/`
-- `PUT /api/articles/<id>/`
-- `DELETE /api/articles/<id>/`
+## Documentation
 
-### Newsletters
-- `GET /api/newsletters/`
-- `POST /api/newsletters/`
-- `GET /api/newsletters/<id>/`
-- `PUT /api/newsletters/<id>/`
-- `DELETE /api/newsletters/<id>/`
+Sphinx docs are located in the `docs/` folder.
 
----
+Build docs manually:
 
-## Future Improvements
+```bash
+cd docs
+python -m sphinx -b html . _build
+```
 
-- Search and filtering  
-- Comment system  
-- Notifications  
-- Analytics dashboard  
+Open generated docs from:
 
----
+```bash
+_build/index.html
+```
+
+## Notes
+
+* Do not commit `.env`, secrets, or tokens.
+* `.gitignore` is configured to exclude sensitive files and virtual environments.
