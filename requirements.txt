@@ -1,31 +1,8 @@
 Django==5.1.4
 djangorestframework==3.17.1
 
-asgiref==3.11.1
-sqlparse==0.5.5
-tzdata==2025.3
-
 python-dotenv==1.2.2
-
 PyMySQL==1.1.2
 
 requests==2.33.1
-urllib3==2.2.3
-idna==3.11
-certifi==2026.2.25
-charset-normalizer==3.4.7
-
-Sphinx==7.3.7
-sphinx_rtd_theme==3.1.0
-docutils>=0.20,<0.22
-Pygments==2.20.0
-babel==2.18.0
-snowballstemmer==3.0.1
-imagesize==2.0.0
-packaging==26.2
-roman-numerals==4.1.0
-
-MarkupSafe==3.0.3
-itsdangerous==2.2.0
-click==8.3.2
-colorama==0.4.6
+cryptography>=42.0
